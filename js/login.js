@@ -1,40 +1,44 @@
+const usuarios = [
+  {
+    correo: "admin@demo.cl",
+    clave: "1234",
+  },
+  {
+    correo: "usuario@demo.cl",
+    clave: "5678",
+  }
+];
+
 function ingresar() {
     let correo = document.getElementById("correo").value;
     let clave = document.getElementById("clave").value;
 
-
-    // validar campos vacios
     if (correo === "" || clave === "") {
         alert("Debe completar todos los campos");
         return;
     }
 
-
-    //validar formato de correo
     let formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
     if (!formatoCorreo.test(correo)) {
-        alert("Ingrese un correo válido");
+        alert("Ingrese un correo válido")
+        return;
     }
 
-
-    // validar argo de clave
-    if (clave.lenght !== 4) {
+    if (clave.length !== 4) {
         alert("La clave debe tener exactamente 4 caracteres");
         return;
     }
 
 
-    // usuario administrador
     if(correo === "admin@demo.cl" && clave === "1234") {
         window.location.href = "admin.html";
     }
 
 
-    // usuario normal
     else if (correo === "usuario@demo.cl" && clave === "5678") {
-        window.location.href = "usuario.html";
+        window.location.href = "pagina_principal.html";
     }
     else {
         alert("correo o clave incorrectos");
