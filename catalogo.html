@@ -44,6 +44,31 @@
 
     </div>
 
+    <hr>
+
+    <!-- Sección de Carrito / Lista de Selección (Requisito 4.8) -->
+    <section>
+        <h2>🛒 Mi Lista de Selección / Carrito</h2>
+        <div id="listaCarrito">
+            <!-- JavaScript mostrará los productos agregados al carrito -->
+        </div>
+        <p><strong>Total acumulado: $<span id="totalCarrito">0</span></strong></p>
+        <button onclick="vaciarCarrito()">Vaciar Lista</button>
+    </section>
+
+    <hr>
+
+    <!-- Sección del Catálogo Principal (Requisito 4.7) -->
+    <section>
+        <h2>Catálogo de Productos Disponibles</h2>
+
+        <!-- JavaScript mostrará las tarjetas de los productos -->
+        <div id="listaProductos"></div>
+    </section>
+
+    <!-- Conexión con el archivo JavaScript -->
+    <script src="js/catalogo.js"></script>
+
     <!-- Derechos reservados -->
     <div class="text-center py-3 border-top border-secondary">
       <small>&copy; 2026 Empresa. Todos los derechos reservados.</small>
