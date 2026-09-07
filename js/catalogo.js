@@ -1105,7 +1105,6 @@ let productos = [
         imagen: "Imagenes/Productos/JA005.webp"
     }
 ];
-
 // Arreglo para almacenar la lista de selección / carrito
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -1115,27 +1114,44 @@ let contenedorCarrito = document.getElementById("listaCarrito");
 let totalElemento = document.getElementById("totalCarrito");
 
 // -------------------------------------------------------------
-// 1. Mostrar productos en el catálogo (Acepta parámetro de lista)
+// 1. Mostrar productos en el catálogo (Diseño exactamente igual al Admin)
 // -------------------------------------------------------------
 function mostrarProductos(arregloAMostrar = productos) {
-    lista.innerHTML = ""; // Limpiar lista
+    if (!lista) return;
+    lista.innerHTML = "";
     
     if (arregloAMostrar.length === 0) {
-        lista.innerHTML = "<p>No hay productos disponibles en esta categoría.</p>";
+        lista.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <p class="text-muted fs-5">No hay productos disponibles en esta categoría.</p>
+            </div>
+        `;
         return;
     }
 
     for (let i = 0; i < arregloAMostrar.length; i++) {
+        let prod = arregloAMostrar[i];
+        
         lista.innerHTML += `
-            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px; border-radius: 5px;">
-                <img src="${arregloAMostrar[i].imagen}" width="150" alt="${arregloAMostrar[i].nombre}">
-                <h3>${arregloAMostrar[i].nombre}</h3>
-                <p><strong>Categoría:</strong> ${arregloAMostrar[i].categoria} - ${arregloAMostrar[i].subcategoria}</p>
-                <p><strong>Marca:</strong> ${arregloAMostrar[i].marca} | <strong>Formato:</strong> ${arregloAMostrar[i].unidad}</p>
-                <p><strong>Precio:</strong> $${arregloAMostrar[i].precio.toLocaleString("es-CL")}</p>
-                
-                <button onclick="verDetalle('${arregloAMostrar[i].id}')">Ver detalle</button>
-                <button onclick="agregarAlCarrito('${arregloAMostrar[i].id}')">Agregar a lista</button>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="${prod.imagen || 'https://via.placeholder.com/300x200?text=Sin+Imagen'}" class="card-img-top" alt="${prod.nombre}" style="height: 200px; object-fit: cover;">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold">${prod.nombre}</h5>
+                        <p class="card-text text-muted flex-grow-1 small">${prod.descripcion || (prod.marca + ' - ' + prod.unidad)}</p>
+                        <div class="fs-5 fw-bold text-primary mb-3">$${prod.precio.toLocaleString("es-CL")} CLP</div>
+                        
+                        <!-- Botones de Acción del Usuario -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <button class="btn btn-outline-secondary w-100 fw-semibold btn-sm" onclick="verDetalle('${prod.id}')">
+                                <i class="bi bi-eye"></i> Detalle
+                            </button>
+                            <button class="btn btn-warning w-100 fw-semibold btn-sm text-dark" onclick="agregarAlCarrito('${prod.id}')">
+                                <i class="bi bi-cart-plus"></i> Agregar
+                            </button>
+                        </div>   
+                    </div>
+                </div>
             </div>
         `;
     }
@@ -1150,24 +1166,20 @@ function filtrarPorCategoria(categoriaBuscada) {
         return;
     }
 
-    // Normalizamos el texto del botón o filtro seleccionado
     let busqueda = categoriaBuscada.toLowerCase().trim();
 
     let productosFiltrados = productos.filter(producto => {
-        let cat = producto.categoria.toLowerCase().trim();
+        let cat = producto.categoria ? producto.categoria.toLowerCase().trim() : "";
         let sub = producto.subcategoria ? producto.subcategoria.toLowerCase().trim() : "";
 
-        // 1. Caso: "Herramientas Manuales"
         if (busqueda.includes("manual")) {
             return cat === "herramientas" && sub === "manuales";
         }
 
-        // 2. Caso: "Herramientas Eléctricas"
         if (busqueda.includes("eléctrica") || busqueda.includes("electrica")) {
             return cat === "herramientas" && (sub === "eléctricas" || sub === "electricas");
         }
 
-        // 3. Caso general: Coincidencia con Nombre de Categoría o Subcategoría
         return cat.includes(busqueda) || busqueda.includes(cat) || sub.includes(busqueda);
     });
 
@@ -1175,7 +1187,7 @@ function filtrarPorCategoria(categoriaBuscada) {
 }
 
 // -------------------------------------------------------------
-// 2. Ver detalle de un producto (Redirección a detalle.html)
+// 2. Ver detalle de un producto
 // -------------------------------------------------------------
 function verDetalle(id) {
     let productoSeleccionado;
@@ -1187,15 +1199,12 @@ function verDetalle(id) {
         }
     }
 
-    // Guardar el producto en LocalStorage
     localStorage.setItem("producto", JSON.stringify(productoSeleccionado));
-
-    // Redireccionar
     window.location.href = "detalle.html";
 }
 
 // -------------------------------------------------------------
-// 3. Funciones del Carrito / Selección (Requisito 4.8)
+// 3. Funciones del Carrito / Selección
 // -------------------------------------------------------------
 function agregarAlCarrito(id) {
     let productoSeleccionado;
@@ -1207,46 +1216,40 @@ function agregarAlCarrito(id) {
         }
     }
 
-    // Agregar producto al arreglo del carrito
     carrito.push(productoSeleccionado);
-
-    // Guardar el carrito actualizado en LocalStorage
     localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    // Actualizar la vista del carrito
     mostrarCarrito();
 }
 
 function mostrarCarrito() {
+    if (!contenedorCarrito) return;
     contenedorCarrito.innerHTML = "";
     let total = 0;
 
     if (carrito.length === 0) {
-        contenedorCarrito.innerHTML = "<p>No hay elementos en tu lista de selección.</p>";
+        contenedorCarrito.innerHTML = "<p class='text-muted my-2'>No hay elementos en tu lista de selección.</p>";
     } else {
         for (let i = 0; i < carrito.length; i++) {
             total += carrito[i].precio;
             contenedorCarrito.innerHTML += `
-                <p>
-                    📌 <strong>${carrito[i].nombre}</strong> - $${carrito[i].precio.toLocaleString("es-CL")}
-                    <button onclick="eliminarDelCarrito(${i})">Quitar</button>
-                </p>
+                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                    <span>📌 <strong>${carrito[i].nombre}</strong> - $${carrito[i].precio.toLocaleString("es-CL")}</span>
+                    <button class="btn btn-sm btn-outline-danger" onclick="eliminarDelCarrito(${i})">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
             `;
         }
     }
 
-    // Actualizar el total monetario
-    totalElemento.textContent = total.toLocaleString("es-CL");
+    if (totalElemento) {
+        totalElemento.textContent = total.toLocaleString("es-CL");
+    }
 }
 
 function eliminarDelCarrito(index) {
-    // Quitar elemento por su posición
     carrito.splice(index, 1);
-
-    // Guardar el carrito actualizado en LocalStorage
     localStorage.setItem("carrito", JSON.stringify(carrito));
-
-    // Refrescar vista
     mostrarCarrito();
 }
 
