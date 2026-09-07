@@ -8,6 +8,104 @@
     <title>Catalogo</title>
 </head>
 <body>
+  </div>
+
+  <hr>
+
+  <section>
+      <h2>🛒 Mi Lista de Selección / Carrito</h2>
+      <div id="listaCarrito">
+      </div>
+      <p><strong>Total acumulado: $<span id="totalCarrito">0</span></strong></p>
+      <button onclick="vaciarCarrito()">Vaciar Lista</button>
+  </section>
+
+  <hr>
+<hr>
+<!-- Sección Compra por Categoría -->
+<section class="container my-4 text-center">
+    <h3 class="fw-bold text-uppercase mb-4">Compra por Categoría</h3>
+    <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-3 justify-content-center">
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Todos')">
+                <i class="bi bi-grid-fill display-6 d-block mb-2"></i>
+                <strong>Todas las Categorías</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Mat. Construcción')">
+                <i class="bi bi-building display-6 d-block mb-2"></i>
+                <strong>Materiales de Construcción</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Pinturas')">
+                <i class="bi bi-paint-bucket display-6 d-block mb-2"></i>
+                <strong>Pinturas</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Herramientas Manuales')">
+                <i class="bi bi-tools display-6 d-block mb-2"></i>
+                <strong>Herramientas Manuales</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Herramientas Eléctricas')">
+                <i class="bi bi-lightning-charge display-6 d-block mb-2"></i>
+                <strong>Herramientas Eléctricas</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Gasfitería')">
+                <i class="bi bi-droplet-fill display-6 d-block mb-2"></i>
+                <strong>Gasfitería</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Electricidad')">
+                <i class="bi bi-plug-fill display-6 d-block mb-2"></i>
+                <strong>Electricidad</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Tornillería y Fijaciones')">
+                <i class="bi bi-nut-fill display-6 d-block mb-2"></i>
+                <strong>Tornillería y Fijaciones</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Madera y Tableros')">
+                <i class="bi bi-square-fill display-6 d-block mb-2"></i>
+                <strong>Madera y Tableros</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Seguridad Industrial')">
+                <i class="bi bi-shield-fill-check display-6 d-block mb-2"></i>
+                <strong>Seguridad Industrial</strong>
+            </button>
+        </div>
+        <div class="col">
+            <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Jardín')">
+                <i class="bi bi-flower2 display-6 d-block mb-2"></i>
+                <strong>Jardín</strong>
+            </button>
+        </div>
+    </div>
+</section>
+
+  <hr>
+
+  <section class="container my-4">
+      <h2 class="mb-3">Catálogo de Productos Disponibles</h2>
+      <div id="listaProductos" class="row row-cols-1 row-cols-md-3 g-4"></div>
+  </section>
+  <section>
+      <h2>Catálogo de Productos Disponibles</h2>
+      <div id="listaProductos"></div>
+  </section>
+
     <!-- Footer -->
 <footer class="bg-dark text-light pt-4">
   <div class="container">
@@ -17,7 +115,7 @@
       <div class="col-md-4 mb-3">
         <h5>Enlaces útiles</h5>
         <ul class="list-unstyled">
-          <li><a href="index.html" class="text-light text-decoration-none">Inicio</a></li>
+          <li><a href="pagina_principal.html" class="text-light text-decoration-none">Inicio</a></li>
           <li><a href="catalogo.html" class="text-light text-decoration-none">Catálogo</a></li>
           <li><a href="contacto.html" class="text-light text-decoration-none">Contacto</a></li>
           <li><a href="novedades.html" class="text-light text-decoration-none">Novedades</a></li>
@@ -42,31 +140,6 @@
         <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
       </div>
 
-    </div>
-
-    <hr>
-
-    <!-- Sección de Carrito / Lista de Selección (Requisito 4.8) -->
-    <section>
-        <h2>🛒 Mi Lista de Selección / Carrito</h2>
-        <div id="listaCarrito">
-            <!-- JavaScript mostrará los productos agregados al carrito -->
-        </div>
-        <p><strong>Total acumulado: $<span id="totalCarrito">0</span></strong></p>
-        <button onclick="vaciarCarrito()">Vaciar Lista</button>
-    </section>
-
-    <hr>
-
-    <!-- Sección del Catálogo Principal (Requisito 4.7) -->
-    <section>
-        <h2>Catálogo de Productos Disponibles</h2>
-
-        <!-- JavaScript mostrará las tarjetas de los productos -->
-        <div id="listaProductos"></div>
-    </section>
-
-    <!-- Conexión con el archivo JavaScript -->
     <script src="js/catalogo.js"></script>
 
     <!-- Derechos reservados -->
