@@ -1,17 +1,18 @@
-const usuarios = [
-  {
-    correo: "admin@demo.cl",
-    clave: "1234",
-  },
-  {
-    correo: "usuario@demo.cl",
-    clave: "5678",
-  }
-];
+function ingresar(event) {
+    if (event) {
+        event.preventDefault(); 
+    }
 
-function ingresar() {
-    let correo = document.getElementById("correo").value;
-    let clave = document.getElementById("clave").value;
+
+    const inputCorreo = document.getElementById("correo") || document.getElementById("correo");
+    const inputClave = document.getElementById("clave") || document.getElementById("clave");
+
+    if (!inputCorreo || !inputClave) {
+        return;
+    }
+
+    let correo = inputCorreo.value.trim();
+    let clave = inputClave.value.trim();
 
     if (correo === "" || clave === "") {
         alert("Debe completar todos los campos");
@@ -19,10 +20,8 @@ function ingresar() {
     }
 
     let formatoCorreo = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-
     if (!formatoCorreo.test(correo)) {
-        alert("Ingrese un correo válido")
+        alert("Ingrese un correo válido");
         return;
     }
 
@@ -31,16 +30,17 @@ function ingresar() {
         return;
     }
 
-
-    if(correo === "admin@demo.cl" && clave === "1234") {
-        window.location.href = "admin.html";
+    if (correo === "admin@demo.cl" && clave === "1234") {
+        localStorage.setItem("rol", "admin");
+        window.location.href = "admin_catalogo.html";
     }
 
-
     else if (correo === "usuario@demo.cl" && clave === "5678") {
+        localStorage.setItem("rol", "usuario");
+        alert("Bienvenido usuario");
         window.location.href = "pagina_principal.html";
     }
     else {
-        alert("correo o clave incorrectos");
+        alert("Correo o clave incorrectos");
     }
 }
