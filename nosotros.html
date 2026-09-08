@@ -270,10 +270,18 @@
                 errorBox.classList.remove('d-none');
                 return false;
             }
+            
+if (correo === 'admin@losmaestros.cl' && pass === '1234') {
+    
+    window.location.href = 'admin.html';
+    return true;
+}
 
-            alert('¡Inicio de sesión exitoso!');
-            location.reload();
-            return true;
+alert('¡Inicio de sesión exitoso!');
+location.reload();
+return true;
+
+            
         }
     </script>
 </body>
