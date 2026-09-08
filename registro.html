@@ -1,11 +1,433 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
-</head>
-<body>
+    <title>Registro de Usuario - Ferretería Los Maestros</title>
+
     
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+ <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top">
+    <div class="container">
+        
+        <a class="navbar-brand d-lg-none" href="pagina_principal.html">
+            <img src="img/logo_no_fondo.png" alt="Logo Los Maestros" class="logo-navbar" style="max-height: 50px;">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <li class="nav-item">
+        <a class="nav-link" href="pagina_principal.html">Inicio</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="./catalogo.html">Productos</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="./nosotros.html">Nosotros</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="./novedades.html">Novedades</a>
+    </li>
+    
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active fw-bold" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
+        <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="./contacto.html">Contáctanos</a></li>
+            
+            <li><a class="dropdown-item active fw-bold" aria-current="page" href="./registro.html">Regístrate</a></li>
+        </ul>
+    </li>
+</ul>
+
+            
+            <a class="navbar-brand mx-auto d-none d-lg-block" href="./pagina_principal.html">
+                <img src="img/logo_no_fondo.png" alt="Logo Los Maestros" class="logo-navbar" style="max-height: 50px;">
+            </a>
+
+            <div class="d-flex align-items-center gap-2 ms-auto">
+                
+                <a href="./seleccion.html" class="btn btn-outline-dark position-relative me-2" title="Ver mi lista de selección">
+                    <i class="bi bi-cart3"></i>
+                    <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        0
+                    </span>
+                </a>
+
+                
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                        <i class="bi bi-person-circle me-1"></i> Iniciar sesión
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-4 shadow-lg" style="width: 320px;">
+                        <form id="formLoginNav" onsubmit="return validarLoginNavbar(event)">
+                            <div id="loginErrorAlert" class="alert alert-danger d-none py-2 small mb-3"></div>
+                            <div class="form-floating mb-3">
+                                <input type="email" class="form-control" id="loginCorreo" placeholder="correo@ejemplo.com" maxlength="100" required>
+                                <label for="loginCorreo">Correo electrónico</label>
+                            </div>
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" id="loginPass" placeholder="Contraseña" maxlength="10" required>
+                                <label for="loginPass">Contraseña (4-10 caracteres)</label>
+                            </div>
+                            <button type="submit" class="btn btn-success w-100">Entrar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+    
+    <main class="container py-5 flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-xl-7">
+                <div class="bg-white p-4 p-md-5 rounded shadow-sm border">
+                    <div class="text-center mb-4">
+                        <i class="bi bi-person-plus-fill text-warning display-4"></i>
+                        <h2 class="fw-bold text-dark mt-2">Crea tu Cuenta</h2>
+                        <p class="text-muted small">Únete a nuestra comunidad para acceder a promociones exclusivas y guardar tus compras.</p>
+                    </div>
+
+                    
+                    <div id="alertRegistro" class="alert d-none mb-4" role="alert"></div>
+
+                    <form id="formRegistro" novalidate onsubmit="return validarFormularioRegistro(event)">
+                        
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <label for="regNombre" class="form-label fw-bold">Nombre Completo <span class="text-danger">*</span></label>
+                                <small id="cntRegNombre" class="text-muted">0/50</small>
+                            </div>
+                            <input type="text" class="form-control" id="regNombre" placeholder="Ej: Juan Pérez González" maxlength="50" required>
+                            <div class="invalid-feedback">Ingresa tu nombre completo (2 a 50 caracteres, solo letras).</div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="regRun" class="form-label fw-bold">RUN <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="regRun" placeholder="12345678-K" maxlength="10" required>
+                                <div class="invalid-feedback">Ingresa un RUN chileno válido (ej: 12345678-K).</div>
+                            </div>
+
+                            
+                            <div class="col-md-6 mb-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="regCorreo" class="form-label fw-bold">Correo Electrónico <span class="text-danger">*</span></label>
+                                    <small id="cntRegCorreo" class="text-muted">0/100</small>
+                                </div>
+                                <input type="email" class="form-control" id="regCorreo" placeholder="correo@ejemplo.com" maxlength="100" required>
+                                <div class="invalid-feedback">Correo inválido o mayor a 100 caracteres.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="regPass" class="form-label fw-bold">Contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="regPass" placeholder="4 a 10 caracteres" maxlength="10" required>
+                                <div class="invalid-feedback">La contraseña debe tener entre 4 y 10 caracteres.</div>
+                            </div>
+
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="regPassConfirm" class="form-label fw-bold">Confirmar Contraseña <span class="text-danger">*</span></label>
+                                <input type="password" class="form-control" id="regPassConfirm" placeholder="Repite tu contraseña" maxlength="10" required>
+                                <div class="invalid-feedback">Las contraseñas no coinciden.</div>
+                            </div>
+                        </div>
+
+                        
+                        <div class="mb-4 form-check">
+                            <input type="checkbox" class="form-check-input" id="regTerminos" required>
+                            <label class="form-check-label text-muted small" for="regTerminos">
+                                Acepto los <a href="#" class="text-dark fw-bold">Términos y Condiciones</a> y las <a href="#" class="text-dark fw-bold">Políticas de Privacidad</a>.
+                            </label>
+                            <div class="invalid-feedback">Debes aceptar los términos para registrarte.</div>
+                        </div>
+
+                        
+                        <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold shadow-sm">
+                            <i class="bi bi-check-circle-fill me-2"></i>Completar Registro
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <footer class="bg-dark text-light pt-4 mt-auto border-top border-warning">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-warning mb-3">Ferretería Los Maestros</h5>
+                    <p class="small text-secondary">
+                        Venta de materiales de construcción, herramientas, pinturas, gasfitería, electricidad y artículos para el hogar.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-3">Navegación</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="./index.html" class="text-secondary text-decoration-none">Inicio</a></li>
+                        <li><a href="./catalogo.html" class="text-secondary text-decoration-none">Productos</a></li>
+                        <li><a href="./novedades.html" class="text-secondary text-decoration-none">Novedades</a></li>
+                        <li><a href="./nosotros.html" class="text-secondary text-decoration-none">Nosotros</a></li>
+                        <li><a href="./contacto.html" class="text-secondary text-decoration-none">Contacto</a></li>
+                        <li><a href="./registro.html" class="text-secondary text-decoration-none">Registro</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-3">Contacto</h5>
+                    <p class="small text-secondary mb-1"><i class="bi bi-geo-alt-fill text-warning me-2"></i>Santiago, Chile</p>
+                    <p class="small text-secondary mb-1"><i class="bi bi-telephone-fill text-warning me-2"></i>+56 9 7652 1661</p>
+                    <p class="small text-secondary mb-1"><i class="bi bi-envelope-fill text-warning me-2"></i>contacto@losmaestros.cl</p>
+                </div>
+            </div>
+            <div class="text-center py-3 mt-4 border-top border-secondary">
+                <small class="text-secondary">&copy; 2026 Ferretería Los Maestros. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/validaciones.js"></script>
+
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof actualizarContadorCarrito === 'function') {
+                actualizarContadorCarrito();
+            }
+
+            
+            const inputNombre = document.getElementById('regNombre');
+            const inputCorreo = document.getElementById('regCorreo');
+            const cntNombre = document.getElementById('cntRegNombre');
+            const cntCorreo = document.getElementById('cntRegCorreo');
+
+            inputNombre.addEventListener('input', () => {
+                cntNombre.innerText = `${inputNombre.value.length}/50`;
+            });
+
+            inputCorreo.addEventListener('input', () => {
+                cntCorreo.innerText = `${inputCorreo.value.length}/100`;
+            });
+        });
+
+        
+        function validarRutChileno(rut) {
+            rut = rut.replace(/\./g, '').replace('-', '').trim().toUpperCase();
+            if (rut.length < 8 || rut.length > 9) return false;
+
+            const cuerpo = rut.slice(0, -1);
+            let dv = rut.slice(-1);
+
+            if (!/^[0-9]+$/.test(cuerpo)) return false;
+
+            let suma = 0;
+            let multiplo = 2;
+
+            for (let i = cuerpo.length - 1; i >= 0; i--) {
+                suma += multiplo * parseInt(cuerpo.charAt(i), 10);
+                multiplo = multiplo < 7 ? multiplo + 1 : 2;
+            }
+
+            let dvEsperado = 11 - (suma % 11);
+            if (dvEsperado === 11) dvEsperado = '0';
+            else if (dvEsperado === 10) dvEsperado = 'K';
+            else dvEsperado = dvEsperado.toString();
+
+            return dv === dvEsperado;
+        }
+
+        
+        function validarFormularioRegistro(e) {
+            e.preventDefault();
+
+            const nombre = document.getElementById('regNombre');
+            const run = document.getElementById('regRun');
+            const correo = document.getElementById('regCorreo');
+            const pass = document.getElementById('regPass');
+            const passConfirm = document.getElementById('regPassConfirm');
+            const terminos = document.getElementById('regTerminos');
+            const alerta = document.getElementById('alertRegistro');
+
+            let esValido = true;
+
+            
+            [nombre, run, correo, pass, passConfirm, terminos].forEach(el => el.classList.remove('is-invalid', 'is-valid'));
+            alerta.classList.add('d-none');
+
+            
+            const regexNombre = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{2,50}$/;
+            if (!regexNombre.test(nombre.value.trim())) {
+                nombre.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                nombre.classList.add('is-valid');
+            }
+
+            
+            if (!validarRutChileno(run.value)) {
+                run.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                run.classList.add('is-valid');
+            }
+
+            
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (correo.value.trim().length > 100 || !regexEmail.test(correo.value.trim())) {
+                correo.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                correo.classList.add('is-valid');
+            }
+
+            
+            const vPass = pass.value.trim();
+            if (vPass.length < 4 || vPass.length > 10) {
+                pass.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                pass.classList.add('is-valid');
+            }
+
+            
+            const vPassConfirm = passConfirm.value.trim();
+            if (!vPassConfirm || vPassConfirm !== vPass) {
+                passConfirm.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                passConfirm.classList.add('is-valid');
+            }
+
+            
+            if (!terminos.checked) {
+                terminos.classList.add('is-invalid');
+                esValido = false;
+            } else {
+                terminos.classList.add('is-valid');
+            }
+
+            if (esValido) {
+                alerta.className = 'alert alert-success mt-3';
+                alerta.innerText = '¡Registro completado con éxito! Redirigiendo...';
+                alerta.classList.remove('d-none');
+
+                setTimeout(() => {
+                    window.location.href = './index.html';
+                }, 2000);
+            } else {
+                alerta.className = 'alert alert-danger mt-3';
+                alerta.innerText = 'Por favor verifica los campos resaltados en rojo.';
+                alerta.classList.remove('d-none');
+            }
+
+            return false;
+        }
+
+        
+        function validarLoginNavbar(e) {
+            e.preventDefault();
+            const correo = document.getElementById('loginCorreo').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+            const errorBox = document.getElementById('loginErrorAlert');
+
+            errorBox.classList.add('d-none');
+            errorBox.innerText = '';
+
+            const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            if (!correo || correo.length > 100 || !regexEmail.test(correo)) {
+                errorBox.innerText = 'Correo inválido o excede los 100 caracteres.';
+                errorBox.classList.remove('d-none');
+                return false;
+            }
+
+            if (!pass || pass.length < 4 || pass.length > 10) {
+                errorBox.innerText = 'La contraseña debe tener entre 4 y 10 caracteres.';
+                errorBox.classList.remove('d-none');
+                return false;
+            }
+
+            alert('¡Inicio de sesión exitoso!');
+            location.reload();
+            return true;
+        }
+        
+function validarLoginNavbar(e) {
+    e.preventDefault();
+
+    const correoInput = document.getElementById('loginCorreo');
+    const passInput = document.getElementById('loginPass');
+    const alertaError = document.getElementById('loginErrorAlert');
+
+    const correo = correoInput.value.trim().toLowerCase();
+    const pass = passInput.value.trim();
+
+    
+    alertaError.classList.add('d-none');
+    alertaError.innerText = '';
+
+    
+    const CORREO_ADMIN = 'admin@losmaestros.cl';
+    const CLAVE_ADMIN = '1234'; 
+
+    
+    if (correo === CORREO_ADMIN) {
+        if (pass !== CLAVE_ADMIN) {
+            
+            alertaError.innerText = 'Contraseña de administrador incorrecta.';
+            alertaError.classList.remove('d-none');
+            return false;
+        }
+
+        
+        const sesion = {
+            correo: correo,
+            rol: 'Administrador',
+            fecha: new Date().toISOString()
+        };
+        localStorage.setItem('sesionActiva', JSON.stringify(sesion));
+        window.location.href = './admin.html';
+        return false;
+    }
+
+    
+    if (pass.length < 4 || pass.length > 10) {
+        alertaError.innerText = 'La contraseña debe tener entre 4 y 10 caracteres.';
+        alertaError.classList.remove('d-none');
+        return false;
+    }
+
+    
+    const sesionCliente = {
+        correo: correo,
+        rol: 'Cliente',
+        fecha: new Date().toISOString()
+    };
+    localStorage.setItem('sesionActiva', JSON.stringify(sesionCliente));
+    window.location.href = './index.html';
+
+    return false;
+}
+    </script>
 </body>
 </html>

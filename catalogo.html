@@ -1,214 +1,619 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Catálogo - Los Maestros</title>
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Productos - Ferretería Los Maestros</title>
+
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="stylesheet" href="css/styles.css">
+
+    <style>
+        .card-categoria, .card-subcategoria {
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-categoria:hover, .card-subcategoria:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+        }
+        .breadcrumb-item + .breadcrumb-item::before {
+            content: "›";
+        }
+    </style>
 </head>
-<body class="bg-light d-flex flex-column min-vh-100">
+<body class="d-flex flex-column min-vh-100 bg-light">
 
- <!-- Navegación con título perfectamente centrado -->
-<nav class="navbar navbar-expand-lg bg-dark navbar-dark sticky-top position-relative">
-  <div class="container-fluid position-relative">
     
-    <!-- Botón hamburguesa para móviles -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm sticky-top">
+        <div class="container">
+            
+            <a class="navbar-brand d-lg-none" href="pagina_principal.html">
+                <img src="img/logo_no_fondo.png" alt="Logo Los Maestros" class="logo-navbar" style="max-height: 50px;">
+            </a>
 
-    <!-- Menú de la izquierda -->
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="pagina_principal.html">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active fw-bold" href="catalogo.html">Productos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="nosotros.html">Nosotros</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Más</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Blog</a></li>
-            <li><a class="dropdown-item" href="contacto.html">Contáctanos</a></li>
-          </ul>
-        </li>
-      </ul>
-    </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-    <!-- Título centrado de forma absoluta -->
-    <a class="navbar-brand fw-bold text-warning fs-4 position-absolute start-50 translate-middle-x my-0" href="pagina_principal.html">
-      Los Maestros
-    </a>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="pagina_principal.html">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active fw-bold" aria-current="page" href="./catalogo.html">Productos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./nosotros.html">Nosotros</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="./novedades.html">Novedades</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Más</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="./contacto.html">Contáctanos</a></li>
+                            <li><a class="dropdown-item" href="./registro.html">Regístrate</a></li>
+                        </ul>
+                    </li>
+                </ul>
 
-    <!-- Botón de inicio de sesión a la derecha -->
-    <div class="dropdown ms-auto">
-      <button class="btn btn-primary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
-        Iniciar sesión
-      </button>
-      <div class="dropdown-menu dropdown-menu-end p-4 shadow" style="width: 320px;">
-        <form onsubmit="ingresar(event)">
-          <div class="form-floating mb-3">
-            <input type="email" class="form-control" id="correo" placeholder="correo@ejemplo.com" required>
-            <label for="correo">Correo electrónico</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input type="password" class="form-control" id="clave" placeholder="Contraseña" required>
-            <label for="clave">Contraseña</label>
-          </div>
-          <button type="submit" class="btn btn-success w-100">Entrar</button>
-        </form>
-      </div>
-    </div>
+                
+                <a class="navbar-brand mx-auto d-none d-lg-block" href="./pagina_principal.html">
+                    <img src="img/logo_no_fondo.png" alt="Logo Los Maestros" class="logo-navbar" style="max-height: 50px;">
+                </a>
 
-  </div>
-</nav>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    
+                    <a href="./seleccion.html" class="btn btn-outline-dark position-relative me-2" title="Ver mi lista de selección">
+                        <i class="bi bi-cart3"></i>
+                        <span id="cartCountBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
 
-  <!-- Contenido Principal -->
-  <main class="container my-5 flex-grow-1">
+                    
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside">
+                            <i class="bi bi-person-circle me-1"></i> Iniciar sesión
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-4 shadow-lg" style="width: 320px;">
+                            <form id="formLoginNav" onsubmit="return validarLoginNavbar(event)">
+                                <div id="loginErrorAlert" class="alert alert-danger d-none py-2 small mb-3"></div>
+                                <div class="form-floating mb-3">
+                                    <input type="email" class="form-control" id="loginCorreo" placeholder="correo@ejemplo.com" maxlength="100" required>
+                                    <label for="loginCorreo">Correo electrónico</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input type="password" class="form-control" id="loginPass" placeholder="Contraseña" maxlength="10" required>
+                                    <label for="loginPass">Contraseña (4-10 caracteres)</label>
+                                </div>
+                                <button type="submit" class="btn btn-success w-100">Entrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     
-    <!-- Header del Catálogo -->
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
-      <div>
-        <h2 class="fw-bold mb-0">Catálogo de Productos</h2>
-        <p class="text-muted mb-0">Encuentra los mejores materiales y herramientas para tu proyecto.</p>
-      </div>
-    </div>
+    <main class="container py-5 flex-grow-1">
+        
+        
+        <nav aria-label="breadcrumb" class="mb-3">
+            <ol class="breadcrumb bg-white p-2 px-3 rounded shadow-sm" id="breadcrumbNavegacion">
+                <li class="breadcrumb-item"><a href="#" onclick="mostrarCategorias(); return false;" class="text-decoration-none text-dark fw-bold">Categorías</a></li>
+                <li class="breadcrumb-item active d-none" id="bcCategoria"></li>
+                <li class="breadcrumb-item active d-none" id="bcSubcategoria"></li>
+            </ol>
+        </nav>
 
-    <!-- Carrito / Lista de Selección -->
-    <div class="card shadow-sm border-0 mb-5">
-      <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-        <h5 class="fw-bold mb-0 text-warning"><i class="bi bi-cart-fill me-2"></i>Mi Lista de Selección</h5>
-        <span class="fs-5 fw-bold text-white">Total: $<span id="totalCarrito">0</span> CLP</span>
-      </div>
-      <div class="card-body">
-        <div id="listaCarrito" class="mb-3"></div>
-        <div class="d-flex justify-content-end">
-          <button class="btn btn-outline-danger btn-sm fw-semibold" onclick="vaciarCarrito()">
-            <i class="bi bi-trash"></i> Vaciar Lista
-          </button>
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <h2 class="fw-bold text-dark" id="tituloSeccion">Categorías de Productos</h2>
+                <p class="text-muted" id="subtituloSeccion">Selecciona una categoría para explorar nuestros productos.</p>
+                
+                
+                <div class="d-flex justify-content-center gap-2">
+                    <button id="btnVolver" class="btn btn-outline-secondary d-none mt-2" onclick="navegarAtras()">
+                        <i class="bi bi-arrow-left me-1"></i> Volver
+                    </button>
+                    <button id="btnVerTodos" class="btn btn-dark mt-2" onclick="verTodosLosProductos()">
+                        <i class="bi bi-grid-fill me-1"></i> Ver catálogo completo
+                    </button>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Sección Compra por Categoría -->
-    <section class="mb-5 text-center">
-      <h4 class="fw-bold text-uppercase mb-4">Compra por Categoría</h4>
-      <div class="row row-cols-2 row-cols-md-4 row-cols-lg-5 g-3 justify-content-center">
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Todos')">
-            <i class="bi bi-grid-fill display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Todas</small>
-          </button>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4" id="categoriasContainer">
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Mat. Construcción')">
+                    <i class="bi bi-bricks fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Mat. Construcción</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Herramientas')">
+                    <i class="bi bi-tools fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Herramientas</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Pinturas')">
+                    <i class="bi bi-paint-bucket fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Pinturas</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Electricidad')">
+                    <i class="bi bi-lightning-charge fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Electricidad</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Gasfitería')">
+                    <i class="bi bi-droplet-half fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Gasfitería</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Madera')">
+                    <i class="bi bi-tree fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Madera</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Tornillería')">
+                    <i class="bi bi-nut fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Tornillería</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Seguridad')">
+                    <i class="bi bi-shield-check fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Seguridad</h5>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card h-100 shadow-sm text-center p-4 border-0 card-categoria" onclick="seleccionarCategoria('Jardín')">
+                    <i class="bi bi-flower1 fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Jardín</h5>
+                </div>
+            </div>
         </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Mat. Construcción')">
-            <i class="bi bi-building display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Mat. Construcción</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Pinturas')">
-            <i class="bi bi-paint-bucket display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Pinturas</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Herramientas Manuales')">
-            <i class="bi bi-tools display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Herramientas Manuales</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Herramientas Eléctricas')">
-            <i class="bi bi-lightning-charge display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Herramientas Eléctricas</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Gasfitería')">
-            <i class="bi bi-droplet-fill display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Gasfitería</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Electricidad')">
-            <i class="bi bi-plug-fill display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Electricidad</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Tornillería y Fijaciones')">
-            <i class="bi bi-nut-fill display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Tornillería y Fijaciones</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Madera y Tableros')">
-            <i class="bi bi-square-fill display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Madera y Tableros</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Seguridad Industrial')">
-            <i class="bi bi-shield-fill-check display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Seguridad Industrial</small>
-          </button>
-        </div>
-        <div class="col">
-          <button class="btn btn-outline-dark w-100 p-3 h-100 btn-categoria" onclick="filtrarPorCategoria('Jardín')">
-            <i class="bi bi-flower2 display-6 d-block mb-2"></i>
-            <small class="fw-bold d-block">Jardín</small>
-          </button>
-        </div>
-      </div>
-    </section>
 
-    <!-- Lista de Productos en Grid -->
-    <div class="row g-4" id="listaProductos"></div>
+        
+        <div class="row row-cols-1 row-cols-md-3 g-4 d-none" id="subcategoriasContainer"></div>
 
-  </main>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 d-none" id="productosContainer"></div>
 
-  <!-- Footer estilo Los Maestros -->
-  <footer class="bg-dark text-light pt-4 mt-auto">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-4 mb-3">
-          <h5>Enlaces útiles</h5>
-          <ul class="list-unstyled">
-            <li><a href="pagina_principal.html" class="text-light text-decoration-none">Inicio</a></li>
-            <li><a href="catalogo.html" class="text-light text-decoration-none">Catálogo</a></li>
-            <li><a href="contacto.html" class="text-light text-decoration-none">Contacto</a></li>
-            <li><a href="novedades.html" class="text-light text-decoration-none">Novedades</a></li>
-            <li><a href="nosotros.html" class="text-light text-decoration-none">Nosotros</a></li>
-          </ul>
-        </div>
-        <div class="col-md-4 mb-3">
-          <h5>Contacto</h5>
-          <p class="mb-1">Email: mejoresElementos@empresa.com</p>
-          <p class="mb-1">Teléfono: +56 9 76521661</p>
-          <p class="mb-1">Dirección: Santiago, Chile</p>
-        </div>
-        <div class="col-md-4 mb-3">
-          <h5>Síguenos</h5>
-          <a href="#" class="text-light me-3 fs-5"><i class="bi bi-facebook"></i></a>
-          <a href="#" class="text-light me-3 fs-5"><i class="bi bi-instagram"></i></a>
-          <a href="#" class="text-light fs-5"><i class="bi bi-twitter"></i></a>
-        </div>
-      </div>
-      <div class="text-center py-3 border-top border-secondary">
-        <small>&copy; 2026 Empresa. Todos los derechos reservados.</small>
-      </div>
-    </div>
-  </footer>
+    </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
-  <script src="js/catalogo.js"></script>
+    
+    <footer class="bg-dark text-light pt-4 mt-auto border-top border-warning">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-warning mb-3">Ferretería Los Maestros</h5>
+                    <p class="small text-secondary">
+                        Venta de materiales de construcción, herramientas, pinturas, gasfitería, electricidad y artículos para el hogar.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-3">Navegación</h5>
+                    <ul class="list-unstyled small">
+                        <li><a href="./pagina_principal.html" class="text-secondary text-decoration-none">Inicio</a></li>
+                        <li><a href="./catalogo.html" class="text-secondary text-decoration-none">Productos</a></li>
+                        <li><a href="./novedades.html" class="text-secondary text-decoration-none">Novedades</a></li>
+                        <li><a href="./nosotros.html" class="text-secondary text-decoration-none">Nosotros</a></li>
+                        <li><a href="./contacto.html" class="text-secondary text-decoration-none">Contacto</a></li>
+                        <li><a href="./registro.html" class="text-secondary text-decoration-none">Registro</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5 class="fw-bold text-white mb-3">Contacto</h5>
+                    <p class="small text-secondary mb-1"><i class="bi bi-geo-alt-fill text-warning me-2"></i>Santiago, Chile</p>
+                    <p class="small text-secondary mb-1"><i class="bi bi-telephone-fill text-warning me-2"></i>+56 9 7652 1661</p>
+                    <p class="small text-secondary mb-1"><i class="bi bi-envelope-fill text-warning me-2"></i>contacto@losmaestros.cl</p>
+                </div>
+            </div>
+            <div class="text-center py-3 mt-4 border-top border-secondary">
+                <small class="text-secondary">&copy; 2026 Ferretería Los Maestros. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/productos.js"></script>
+    <script src="js/validaciones.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        
+        const MAPA_CATEGORIAS = {
+            "Mat. Construcción": ["Cementos", "Morteros", "Áridos", "Ladrillos", "Bloques"],
+            "Herramientas": ["Manuales", "Eléctricas"],
+            "Pinturas": ["Látex", "Esmalte", "Antihumedad", "Accesorios"],
+            "Electricidad": ["Conductores", "Enchufes", "Iluminación", "Interruptores", "Tableros"],
+            "Gasfitería": ["Tuberías", "Uniones", "Llaves", "Grifería", "Sellos"],
+            "Madera": ["Pino cepillado", "Tableros"],
+            "Tornillería": ["Tornillos", "Tacos", "Pernos", "Anclajes"],
+            "Seguridad": ["EPP"],
+            "Jardín": ["Mangueras", "Herramientas"]
+        };
+
+        
+        let categoriaActual = null;
+        let subcategoriaActual = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            forzarContador();
+        });
+
+        function obtenerCatalogoCompleto() {
+            if (typeof productos !== 'undefined' && Array.isArray(productos) && productos.length > 0) {
+                return productos;
+            }
+            if (window.productos && Array.isArray(window.productos) && window.productos.length > 0) {
+                return window.productos;
+            }
+            return [
+                ...(window.productosMaterialesConstruccion || []),
+                ...(window.productosHerramientasManuales || []),
+                ...(window.productosHerramientasElectricas || []),
+                ...(window.productosMaterialesBasicos || []),
+                ...(window.productosGasfiteria || []),
+                ...(window.productosElectricidad || []),
+                ...(window.productosTornillería || []),
+                ...(window.productosTornilleria || []),
+                ...(window.productosMadera || []),
+                ...(window.productosSeguridad || []),
+                ...(window.productosJardin || [])
+            ];
+        }
+
+        const normalizar = (str) => {
+            if (!str) return "";
+            return str.toString()
+                      .toLowerCase()
+                      .normalize("NFD")
+                      .replace(/[\u0300-\u036f]/g, "")
+                      .trim();
+        };
+
+        
+        function mostrarCategorias() {
+            categoriaActual = null;
+            subcategoriaActual = null;
+
+            document.getElementById('categoriasContainer').classList.remove('d-none');
+            document.getElementById('subcategoriasContainer').classList.add('d-none');
+            document.getElementById('productosContainer').classList.add('d-none');
+            
+            document.getElementById('btnVolver').classList.add('d-none');
+            document.getElementById('btnVerTodos').classList.remove('d-none');
+            
+            document.getElementById('tituloSeccion').textContent = "Categorías de Productos";
+            document.getElementById('subtituloSeccion').textContent = "Selecciona una categoría para explorar nuestros productos.";
+
+            document.getElementById('bcCategoria').classList.add('d-none');
+            document.getElementById('bcSubcategoria').classList.add('d-none');
+        }
+
+        
+        function seleccionarCategoria(cat) {
+            categoriaActual = cat;
+            subcategoriaActual = null;
+
+            const subcatContainer = document.getElementById('subcategoriasContainer');
+            const subcatsList = MAPA_CATEGORIAS[cat] || [];
+
+            document.getElementById('categoriasContainer').classList.add('d-none');
+            document.getElementById('productosContainer').classList.add('d-none');
+            subcatContainer.classList.remove('d-none');
+
+            document.getElementById('btnVolver').classList.remove('d-none');
+            document.getElementById('btnVerTodos').classList.add('d-none');
+
+            document.getElementById('tituloSeccion').textContent = cat;
+            document.getElementById('subtituloSeccion').textContent = "Selecciona una subcategoría para ver sus productos.";
+
+            
+            const bcCat = document.getElementById('bcCategoria');
+            bcCat.textContent = cat;
+            bcCat.classList.remove('d-none');
+            document.getElementById('bcSubcategoria').classList.add('d-none');
+
+            subcatContainer.innerHTML = '';
+
+            
+            const colAll = document.createElement('div');
+            colAll.className = 'col';
+            colAll.innerHTML = `
+                <div class="card h-100 shadow-sm text-center p-4 border-2 border-warning card-subcategoria bg-warning bg-opacity-10" onclick="filtrarProductos('${cat}', 'todas')">
+                    <i class="bi bi-grid-3x3-gap-fill fs-1 text-warning mb-2"></i>
+                    <h5 class="fw-bold">Ver Todo en ${cat}</h5>
+                    <small class="text-muted">Todos los productos de la categoría</small>
+                </div>`;
+            subcatContainer.appendChild(colAll);
+
+            
+            subcatsList.forEach(sub => {
+                const col = document.createElement('div');
+                col.className = 'col';
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm text-center p-4 border-0 card-subcategoria" onclick="filtrarProductos('${cat}', '${sub}')">
+                        <i class="bi bi-folder2-open fs-1 text-warning mb-2"></i>
+                        <h5 class="fw-bold">${sub}</h5>
+                    </div>`;
+                subcatContainer.appendChild(col);
+            });
+        }
+
+        
+        function filtrarProductos(cat, sub) {
+            categoriaActual = cat;
+            subcategoriaActual = sub;
+
+            const prodContainer = document.getElementById('productosContainer');
+            
+            document.getElementById('subcategoriasContainer').classList.add('d-none');
+            document.getElementById('categoriasContainer').classList.add('d-none');
+            prodContainer.classList.remove('d-none');
+
+            document.getElementById('btnVolver').classList.remove('d-none');
+
+            if (sub === 'todas') {
+                document.getElementById('tituloSeccion').textContent = `Productos en ${cat}`;
+                document.getElementById('subtituloSeccion').textContent = `Mostrando todos los productos de ${cat}.`;
+            } else {
+                document.getElementById('tituloSeccion').textContent = `${cat} - ${sub}`;
+                document.getElementById('subtituloSeccion').textContent = `Productos de la subcategoría: ${sub}.`;
+            }
+
+          
+            const bcCat = document.getElementById('bcCategoria');
+            bcCat.innerHTML = `<a href="#" onclick="seleccionarCategoria('${cat}'); return false;" class="text-decoration-none text-secondary">${cat}</a>`;
+            bcCat.classList.remove('d-none');
+
+            const bcSub = document.getElementById('bcSubcategoria');
+            if (sub !== 'todas') {
+                bcSub.textContent = sub;
+                bcSub.classList.remove('d-none');
+            } else {
+                bcSub.classList.add('d-none');
+            }
+
+            prodContainer.innerHTML = '';
+            const listado = obtenerCatalogoCompleto();
+
+            const catNorm = normalizar(cat);
+            const subNorm = normalizar(sub);
+
+            const filtrados = listado.filter(p => {
+                if (!p.categoria) return false;
+                const pCat = normalizar(p.categoria);
+                const pSub = p.subcategoria ? normalizar(p.subcategoria) : "";
+
+                const coincideCat = (pCat === catNorm || pCat.includes(catNorm) || catNorm.includes(pCat));
+                if (!coincideCat) return false;
+
+                if (sub === 'todas') return true;
+                return (pSub === subNorm || pSub.includes(subNorm) || subNorm.includes(pSub));
+            });
+
+            if (filtrados.length === 0) {
+                prodContainer.innerHTML = `
+                    <div class="col-12 text-center text-muted py-5">
+                        <i class="bi bi-box-seam fs-1 text-secondary mb-3 d-block"></i>
+                        <h4>No hay productos en esta subcategoría aún.</h4>
+                        <p class="small text-muted">Asegúrate de configurar los productos en js/main.js o js/productos.js con los campos 'categoria' y 'subcategoria'.</p>
+                    </div>`;
+                return;
+            }
+
+            filtrados.forEach(p => {
+                const col = document.createElement('div');
+                col.className = 'col';
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="${p.imagen || 'https://picsum.photos/300/200?random=' + (p.id || p.codigo)}" class="card-img-top object-fit-cover" height="200" alt="${p.nombre}" onerror="this.src='https://picsum.photos/300/200?random=${p.id}'">
+                        <div class="card-body d-flex flex-column p-3">
+                            <div class="d-flex gap-1 mb-2">
+                                <span class="badge bg-warning text-dark">${p.categoria}</span>
+                                ${p.subcategoria ? `<span class="badge bg-secondary">${p.subcategoria}</span>` : ''}
+                            </div>
+                            <h5 class="card-title fw-bold mb-1">${p.nombre}</h5>
+                            <p class="card-text text-muted small flex-grow-1">${p.descripcion || 'Sin descripción'}</p>
+                            <p class="card-text text-secondary mb-1 small">Marca: <strong>${p.marca || 'N/A'}</strong> | Stock: ${p.stock ?? 'Disponible'}</p>
+                            <h4 class="card-text text-success fw-bold my-2">$${p.precio ? p.precio.toLocaleString('es-CL') : 0}</h4>
+                            
+                            <div class="d-grid gap-2 mt-2">
+                                <a href="./detalle-producto.html?id=${p.id || p.codigo}" class="btn btn-outline-dark btn-sm fw-bold">
+                                    <i class="bi bi-info-circle me-1"></i> Ver detalle
+                                </a>
+                                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="agregarAlCarrito('${p.id || p.codigo}')">
+                                    <i class="bi bi-cart-plus me-1"></i> Añadir a la Lista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                prodContainer.appendChild(col);
+            });
+        }
+
+        
+        function navegarAtras() {
+            if (subcategoriaActual || document.getElementById('productosContainer').classList.contains('d-none') === false) {
+                if (categoriaActual) {
+                    seleccionarCategoria(categoriaActual);
+                } else {
+                    mostrarCategorias();
+                }
+            } else {
+                mostrarCategorias();
+            }
+        }
+
+        
+        function verTodosLosProductos() {
+            categoriaActual = null;
+            subcategoriaActual = null;
+
+            document.getElementById('categoriasContainer').classList.add('d-none');
+            document.getElementById('subcategoriasContainer').classList.add('d-none');
+            const prodContainer = document.getElementById('productosContainer');
+            prodContainer.classList.remove('d-none');
+
+            document.getElementById('btnVolver').classList.remove('d-none');
+            document.getElementById('btnVerTodos').classList.add('d-none');
+
+            document.getElementById('tituloSeccion').textContent = "Catálogo Completo";
+            document.getElementById('subtituloSeccion').textContent = "Mostrando todos los productos disponibles en tienda.";
+
+            document.getElementById('bcCategoria').classList.add('d-none');
+            document.getElementById('bcSubcategoria').classList.add('d-none');
+
+            prodContainer.innerHTML = '';
+            const listado = obtenerCatalogoCompleto();
+
+            listado.forEach(p => {
+                const col = document.createElement('div');
+                col.className = 'col';
+                col.innerHTML = `
+                    <div class="card h-100 shadow-sm border-0">
+                        <img src="${p.imagen || 'https://picsum.photos/300/200?random=' + (p.id || p.codigo)}" class="card-img-top object-fit-cover" height="200" alt="${p.nombre}">
+                        <div class="card-body d-flex flex-column p-3">
+                            <div class="d-flex gap-1 mb-2">
+                                <span class="badge bg-warning text-dark">${p.categoria}</span>
+                                ${p.subcategoria ? `<span class="badge bg-secondary">${p.subcategoria}</span>` : ''}
+                            </div>
+                            <h5 class="card-title fw-bold mb-1">${p.nombre}</h5>
+                            <p class="card-text text-muted small flex-grow-1">${p.descripcion || ''}</p>
+                            <p class="card-text text-secondary mb-1 small">Marca: <strong>${p.marca || 'N/A'}</strong> | Stock: ${p.stock ?? 'Disponible'}</p>
+                            <h4 class="card-text text-success fw-bold my-2">$${p.precio ? p.precio.toLocaleString('es-CL') : 0}</h4>
+                            <div class="d-grid gap-2 mt-2">
+                                <a href="./detalle-producto.html?id=${p.id || p.codigo}" class="btn btn-outline-dark btn-sm fw-bold">
+                                    <i class="bi bi-info-circle me-1"></i> Ver detalle
+                                </a>
+                                <button class="btn btn-warning btn-sm text-dark fw-bold" onclick="agregarAlCarrito('${p.id || p.codigo}')">
+                                    <i class="bi bi-cart-plus me-1"></i> Añadir a la Lista
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                prodContainer.appendChild(col);
+            });
+        }
+
+        
+        function agregarAlCarrito(id) {
+            const listado = obtenerCatalogoCompleto();
+            let seleccionados = JSON.parse(localStorage.getItem('miListaSeleccion')) || [];
+            
+            const producto = listado.find(p => (p.id == id || p.codigo == id));
+
+            if (producto) {
+                const existe = seleccionados.some(item => (item.id == id || item.codigo == id));
+                if (!existe) {
+                    seleccionados.push({ ...producto, cantidad: 1 });
+                    localStorage.setItem('miListaSeleccion', JSON.stringify(seleccionados));
+                    forzarContador();
+                    alert(`"${producto.nombre}" agregado exitosamente a tu lista.`);
+                } else {
+                    alert('Este producto ya se encuentra en tu lista.');
+                }
+            } else {
+                alert('No se pudo encontrar la información del producto.');
+            }
+        }
+
+        
+        function forzarContador() {
+            const badge = document.getElementById('cartCountBadge');
+            if (badge) {
+                const seleccionados = JSON.parse(localStorage.getItem('miListaSeleccion')) || [];
+                const totalItems = seleccionados.reduce((acc, item) => acc + (Number(item.cantidad) || 1), 0);
+                badge.textContent = totalItems;
+            }
+        }
+
+        
+        function validarLoginNavbar(e) {
+            e.preventDefault();
+
+            const correoInput = document.getElementById('loginCorreo');
+            const passInput = document.getElementById('loginPass');
+            const alertaError = document.getElementById('loginErrorAlert');
+
+            if (!correoInput || !passInput) return false;
+
+            const correo = correoInput.value.trim().toLowerCase();
+            const pass = passInput.value.trim();
+
+            if (alertaError) {
+                alertaError.classList.add('d-none');
+                alertaError.innerText = '';
+            }
+
+            const CORREO_ADMIN = 'admin@losmaestros.cl';
+            const CLAVE_ADMIN = '1234';
+
+            
+            if (correo === CORREO_ADMIN) {
+                if (pass !== CLAVE_ADMIN) {
+                    if (alertaError) {
+                        alertaError.innerText = 'Contraseña de administrador incorrecta.';
+                        alertaError.classList.remove('d-none');
+                    } else {
+                        alert('Contraseña de administrador incorrecta.');
+                    }
+                    return false;
+                }
+
+                localStorage.setItem('sesionActiva', JSON.stringify({
+                    correo: correo,
+                    rol: 'Administrador',
+                    fecha: new Date().toISOString()
+                }));
+
+                window.location.href = './admin.html';
+                return false;
+            }
+
+            
+            if (pass.length < 4 || pass.length > 10) {
+                if (alertaError) {
+                    alertaError.innerText = 'La contraseña debe tener entre 4 y 10 caracteres.';
+                    alertaError.classList.remove('d-none');
+                } else {
+                    alert('La contraseña debe tener entre 4 y 10 caracteres.');
+                }
+                return false;
+            }
+
+            localStorage.setItem('sesionActiva', JSON.stringify({
+                correo: correo,
+                rol: 'Cliente',
+                fecha: new Date().toISOString()
+            }));
+
+            window.location.href = './pagina_principal.html';
+            return false;
+        }
+
+        window.onload = forzarContador;
+    </script>
 </body>
 </html>
