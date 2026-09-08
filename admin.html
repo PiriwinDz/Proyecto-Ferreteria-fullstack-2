@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Administrativo - Ferretería Los Maestros</title>
+
+    <!-- Bootstrap CSS e Iconos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        /* Estilos diferenciadores para la vista Administrativa */
+        body {
+            background-color: #f4f6f9;
+        }
+        .sidebar {
+            min-height: calc(100vh - 56px);
+            background-color: #212529;
+        }
+        .sidebar .nav-link {
+            color: #cfd8dc;
+            padding: 12px 20px;
+            border-radius: 4px;
+            margin-bottom: 4px;
+        }
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: #ffc107;
+            color: #212529;
+            font-weight: bold;
+        }
+        .admin-card {
+            border-left: 5px solid #ffc107;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR ADMINISTRATIVO -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom border-warning">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-warning" href="#">
+                <i class="bi bi-shield-lock-fill me-2"></i>Panel Admin | Los Maestros
+            </a>
+            
+            <div class="d-flex align-items-center gap-3 ms-auto">
+                <span class="text-light small"><i class="bi bi-person-circle me-1"></i> Admin: <strong>Maestro Supervisor</strong></span>
+                <a href="./pagina_principal.html" class="btn btn-outline-warning btn-sm">
+                    <i class="bi bi-box-arrow-right me-1"></i> Ir al Sitio Público
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ESTRUCTURA PRINCIPAL (SIDEBAR + CONTENIDO) -->
+    <div class="container-fluid">
+        <div class="row">
+            
+            <!-- MENÚ NAVEGACIÓN ADMINISTRATIVO (SIDEBAR) -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar p-3 collapse navbar-collapse" id="sidebarMenu">
+                <div class="position-sticky">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-3 text-muted text-uppercase fs-7">
+                        <span>Gestión General</span>
+                    </h6>
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="btnTabDashboard" onclick="mostrarSeccion('dashboard')">
+                                <i class="bi bi-speedometer2 me-2"></i> Resumen
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="btnTabProductos" onclick="mostrarSeccion('productos')">
+                                <i class="bi bi-tools me-2"></i> Mantenedor Productos
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="btnTabUsuarios" onclick="mostrarSeccion('usuarios')">
+                                <i class="bi bi-people-fill me-2"></i> Mantenedor Usuarios
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- CONTENIDO DINÁMICO ADMIN -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+                
+                <!-- 1. SECCIÓN DASHBOARD / RESUMEN -->
+                <div id="seccionDashboard">
+                    <h2 class="h3 fw-bold text-dark mb-4">Bienvenido al Panel de Administración</h2>
+                    
+                    <div class="row g-4 mb-4">
+                        <div class="col-md-4">
+                            <div class="card shadow-sm admin-card p-3 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Productos Registrados</h6>
+                                        <h3 class="fw-bold mb-0" id="totalProdCount">0</h3>
+                                    </div>
+                                    <i class="bi bi-boxes fs-1 text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm admin-card p-3 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Usuarios del Sistema</h6>
+                                        <h3 class="fw-bold mb-0" id="totalUsersCount">1</h3>
+                                    </div>
+                                    <i class="bi bi-people fs-1 text-warning"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card shadow-sm admin-card p-3 bg-white">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <div>
+                                        <h6 class="text-muted mb-1">Estado del Sistema</h6>
+                                        <h5 class="fw-bold text-success mb-0">Activo / Operativo</h5>
+                                    </div>
+                                    <i class="bi bi-check-circle-fill fs-1 text-success"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. CONTENEDOR PARA MANTENEDOR DE PRODUCTOS (SE COMPLETARÁ EN EL SIGUIENTE PASO) -->
+                <!-- 2. SECCIÓN MANTENEDOR DE PRODUCTOS -->
+<div id="seccionProductos" class="d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="h3 fw-bold text-dark mb-0">Mantenedor de Productos</h2>
+            <p class="text-muted mb-0">Administra el inventario de herramientas y materiales.</p>
+        </div>
+        <button class="btn btn-warning fw-bold text-dark" onclick="abrirModalProducto()">
+            <i class="bi bi-plus-circle-fill me-1"></i> Agregar Nuevo Producto
+        </button>
+    </div>
+
+    <!-- TABLA DE PRODUCTOS -->
+    <div class="card shadow-sm border-0 p-3 bg-white">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID / Código</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaAdminProductos">
+                    <!-- Filas cargadas dinámicamente mediante JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA CREAR / EDITAR PRODUCTO -->
+<div class="modal fade" id="modalProducto" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="modalProductoTitulo">Agregar Producto</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formProducto" onsubmit="guardarProducto(event)">
+                    <input type="hidden" id="prodIndexHidden">
+                    
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label for="prodCodigo" class="form-label fw-semibold">Código / ID</label>
+                            <input type="text" class="form-control" id="prodCodigo" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="prodNombre" class="form-label fw-semibold">Nombre del Producto</label>
+                            <input type="text" class="form-control" id="prodNombre" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="prodCategoria" class="form-label fw-semibold">Categoría</label>
+                            <select class="form-select" id="prodCategoria" required>
+                                <option value="">Selecciona categoría...</option>
+                                <option value="Herramientas Manuales">Herramientas Manuales</option>
+                                <option value="Herramientas Eléctricas">Herramientas Eléctricas</option>
+                                <option value="Materiales de Construcción">Materiales de Construcción</option>
+                                <option value="Fijaciones y Tornillos">Fijaciones y Tornillos</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="prodPrecio" class="form-label fw-semibold">Precio ($ CLP)</label>
+                            <input type="number" min="0" class="form-control" id="prodPrecio" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="prodImagen" class="form-label fw-semibold">URL de la Imagen</label>
+                            <input type="url" class="form-control" id="prodImagen" placeholder="https://ejemplo.com/imagen.jpg" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="prodDescripcion" class="form-label fw-semibold">Descripción</label>
+                            <textarea class="form-control" id="prodDescripcion" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 mt-4 border-top pt-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning fw-bold text-dark">Guardar Producto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+                <!-- 3. CONTENEDOR PARA MANTENEDOR DE USUARIOS (SE COMPLETARÁ POSTERIORMENTE) -->
+                <!-- 3. SECCIÓN MANTENEDOR DE USUARIOS -->
+<div id="seccionUsuarios" class="d-none">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="h3 fw-bold text-dark mb-0">Mantenedor de Usuarios</h2>
+            <p class="text-muted mb-0">Gestión de cuentas, asignación de roles y datos de contacto.</p>
+        </div>
+        <button class="btn btn-warning fw-bold text-dark" onclick="abrirModalUsuario()">
+            <i class="bi bi-person-plus-fill me-1"></i> Crear Nuevo Usuario
+        </button>
+    </div>
+
+    <!-- TABLA DE USUARIOS -->
+    <div class="card shadow-sm border-0 p-3 bg-white">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>RUN</th>
+                        <th>Nombre Completo</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th>Región / Comuna</th>
+                        <th class="text-end">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaAdminUsuarios">
+                    <!-- Cargado dinámicamente -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL PARA CREAR / EDITAR USUARIO -->
+<div class="modal fade" id="modalUsuario" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title fw-bold" id="modalUsuarioTitulo">Crear Usuario</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="formUsuario" onsubmit="guardarUsuario(event)">
+                    <input type="hidden" id="userIndexHidden">
+                    
+                    <div class="row g-3">
+                        <!-- RUN -->
+                        <div class="col-md-6">
+                            <label for="userRun" class="form-label fw-semibold">RUN (Sin puntos ni guion)</label>
+                            <input type="text" class="form-control" id="userRun" placeholder="12345678K" maxlength="9" required>
+                            <div class="invalid-feedback" id="runError">RUN o Dígito Verificador no válido.</div>
+                        </div>
+
+                        <!-- Rol -->
+                        <div class="col-md-6">
+                            <label for="userRol" class="form-label fw-semibold">Tipo / Rol de Usuario</label>
+                            <select class="form-select" id="userRol" required>
+                                <option value="Cliente">Cliente</option>
+                                <option value="Administrador">Administrador</option>
+                            </select>
+                        </div>
+
+                        <!-- Nombre -->
+                        <div class="col-md-6">
+                            <label for="userNombre" class="form-label fw-semibold">Nombre</label>
+                            <input type="text" class="form-control" id="userNombre" maxlength="50" required>
+                        </div>
+
+                        <!-- Apellidos -->
+                        <div class="col-md-6">
+                            <label for="userApellidos" class="form-label fw-semibold">Apellidos</label>
+                            <input type="text" class="form-control" id="userApellidos" maxlength="100" required>
+                        </div>
+
+                        <!-- Correo -->
+                        <div class="col-md-6">
+                            <label for="userCorreo" class="form-label fw-semibold">Correo Electrónico</label>
+                            <input type="email" class="form-control" id="userCorreo" maxlength="100" required>
+                        </div>
+
+                        <!-- Fecha de Nacimiento (Opcional) -->
+                        <div class="col-md-6">
+                            <label for="userFechaNac" class="form-label fw-semibold">Fecha de Nacimiento (Opcional)</label>
+                            <input type="date" class="form-control" id="userFechaNac">
+                        </div>
+
+                        <!-- Región -->
+                        <div class="col-md-6">
+                            <label for="userRegion" class="form-label fw-semibold">Región</label>
+                            <select class="form-select" id="userRegion" onchange="cargarComunas()" required>
+                                <option value="">Seleccione Región...</option>
+                            </select>
+                        </div>
+
+                        <!-- Comuna -->
+                        <div class="col-md-6">
+                            <label for="userComuna" class="form-label fw-semibold">Comuna</label>
+                            <select class="form-select" id="userComuna" required>
+                                <option value="">Seleccione Comuna...</option>
+                            </select>
+                        </div>
+
+                        <!-- Dirección -->
+                        <div class="col-12">
+                            <label for="userDireccion" class="form-label fw-semibold">Dirección</label>
+                            <input type="text" class="form-control" id="userDireccion" maxlength="300" placeholder="Av. Principal 123" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer px-0 pb-0 mt-4 border-top pt-3">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning fw-bold text-dark">Guardar Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/productos.js"></script>
+    
+    <script>
+        // Función para alternar pestañas del Panel de Control
+        function mostrarSeccion(seccion) {
+            document.getElementById('seccionDashboard').classList.add('d-none');
+            document.getElementById('seccionProductos').classList.add('d-none');
+            document.getElementById('seccionUsuarios').classList.add('d-none');
+
+            document.getElementById('btnTabDashboard').classList.remove('active');
+            document.getElementById('btnTabProductos').classList.remove('active');
+            document.getElementById('btnTabUsuarios').classList.remove('active');
+
+            if (seccion === 'dashboard') {
+                document.getElementById('seccionDashboard').classList.remove('d-none');
+                document.getElementById('btnTabDashboard').classList.add('active');
+            } else if (seccion === 'productos') {
+                document.getElementById('seccionProductos').classList.remove('d-none');
+                document.getElementById('btnTabProductos').classList.add('active');
+            } else if (seccion === 'usuarios') {
+                document.getElementById('seccionUsuarios').classList.remove('d-none');
+                document.getElementById('btnTabUsuarios').classList.add('active');
+            }
+        }
+
+        // Cargar conteos básicos al iniciar
+        document.addEventListener('DOMContentLoaded', () => {
+            const listadoProds = typeof productos !== 'undefined' ? productos : [];
+            document.getElementById('totalProdCount').textContent = listadoProds.length;
+        });
+        // Declarar lista de productos local
+let listaProductosAdmin = [];
+let modalProductoInstance = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    modalProductoInstance = new bootstrap.Modal(document.getElementById('modalProducto'));
+    
+    // Cargar productos desde productos.js o LocalStorage si han sido modificados
+    const guardados = localStorage.getItem('misProductosAdmin');
+    if (guardados) {
+        listaProductosAdmin = JSON.parse(guardados);
+    } else if (typeof productos !== 'undefined') {
+        listaProductosAdmin = [...productos];
+    }
+
+    renderizarTablaProductosAdmin();
+});
+
+// Función para pintar la tabla de productos en el Panel Admin
+function renderizarTablaProductosAdmin() {
+    const tbody = document.getElementById('tablaAdminProductos');
+    if (!tbody) return;
+
+    if (listaProductosAdmin.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="text-center py-4 text-muted">No hay productos registrados.</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = listaProductosAdmin.map((prod, index) => `
+        <tr>
+            <td class="fw-bold">${prod.codigo || prod.id || (index + 1)}</td>
+            <td>
+                <img src="${prod.imagen}" alt="${prod.nombre}" width="45" height="45" class="rounded object-fit-cover">
+            </td>
+            <td class="fw-semibold">${prod.nombre}</td>
+            <td><span class="badge bg-secondary">${prod.categoria || 'General'}</span></td>
+            <td class="fw-bold">$${(Number(prod.precio) || 0).toLocaleString('es-CL')}</td>
+            <td class="text-end">
+                <button class="btn btn-outline-primary btn-sm me-1" onclick="editarProducto(${index})" title="Editar">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" onclick="eliminarProductoAdmin(${index})" title="Eliminar">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+
+    // Actualizar contador del Dashboard
+    document.getElementById('totalProdCount').textContent = listaProductosAdmin.length;
+}
+
+// Abrir modal para NUEVO producto
+function abrirModalProducto() {
+    document.getElementById('formProducto').reset();
+    document.getElementById('prodIndexHidden').value = '-1';
+    document.getElementById('modalProductoTitulo').textContent = 'Agregar Nuevo Producto';
+    modalProductoInstance.show();
+}
+
+// Abrir modal para EDITAR producto existente
+function editarProducto(index) {
+    const prod = listaProductosAdmin[index];
+    if (!prod) return;
+
+    document.getElementById('prodIndexHidden').value = index;
+    document.getElementById('prodCodigo').value = prod.codigo || prod.id || '';
+    document.getElementById('prodNombre').value = prod.nombre || '';
+    document.getElementById('prodCategoria').value = prod.categoria || 'Herramientas Manuales';
+    document.getElementById('prodPrecio').value = prod.precio || 0;
+    document.getElementById('prodImagen').value = prod.imagen || '';
+    document.getElementById('prodDescripcion').value = prod.descripcion || '';
+
+    document.getElementById('modalProductoTitulo').textContent = 'Editar Producto';
+    modalProductoInstance.show();
+}
+
+// Guardar (Crear o Modificar)
+function guardarProducto(e) {
+    e.preventDefault();
+    const index = parseInt(document.getElementById('prodIndexHidden').value);
+
+    const nuevoProd = {
+        codigo: document.getElementById('prodCodigo').value,
+        nombre: document.getElementById('prodNombre').value,
+        categoria: document.getElementById('prodCategoria').value,
+        precio: Number(document.getElementById('prodPrecio').value),
+        imagen: document.getElementById('prodImagen').value,
+        descripcion: document.getElementById('prodDescripcion').value
+    };
+
+    if (index === -1) {
+        // Crear nuevo
+        listaProductosAdmin.push(nuevoProd);
+    } else {
+        // Editar existente
+        listaProductosAdmin[index] = nuevoProd;
+    }
+
+    // Guardar cambios en LocalStorage
+    localStorage.setItem('misProductosAdmin', JSON.stringify(listaProductosAdmin));
+    
+    renderizarTablaProductosAdmin();
+    modalProductoInstance.hide();
+    alert('¡Producto guardado exitosamente!');
+}
+
+// Eliminar producto
+function eliminarProductoAdmin(index) {
+    if (confirm('¿Estás seguro de que deseas eliminar este producto?')) {
+        listaProductosAdmin.splice(index, 1);
+        localStorage.setItem('misProductosAdmin', JSON.stringify(listaProductosAdmin));
+        renderizarTablaProductosAdmin();
+    }
+}
+    // Arreglo de Regiones y Comunas de Chile
+const chileRegionesComunas = [
+    {
+        region: "Metropolitana de Santiago",
+        comunas: ["Santiago", "Maipú", "Puente Alto", "Providencia", "Las Condes", "La Florida"]
+    },
+    {
+        region: "Valparaíso",
+        comunas: ["Valparaíso", "Viña del Mar", "Quilpué", "Villa Alemana", "San Antonio"]
+    },
+    {
+        region: "Bío-Bío",
+        comunas: ["Concepción", "Talcahuano", "Los Ángeles", "Chillán", "Coronel"]
+    }
+];
+
+// Usuarios iniciales
+let listaUsuariosAdmin = JSON.parse(localStorage.getItem('misUsuariosAdmin')) || [
+    {
+        run: "111111111",
+        nombre: "Admin",
+        apellidos: "Los Maestros",
+        correo: "admin@losmaestros.cl",
+        rol: "Administrador",
+        region: "Metropolitana de Santiago",
+        comuna: "Santiago",
+        direccion: "Av. Central 100"
+    }
+];
+
+let modalUsuarioInstance = null;
+
+// Inicialización
+document.addEventListener('DOMContentLoaded', () => {
+    modalUsuarioInstance = new bootstrap.Modal(document.getElementById('modalUsuario'));
+    cargarRegionesSelect();
+    renderizarTablaUsuariosAdmin();
+});
+
+// Cargar select de regiones
+function cargarRegionesSelect() {
+    const selectReg = document.getElementById('userRegion');
+    selectReg.innerHTML = '<option value="">Seleccione Región...</option>';
+    chileRegionesComunas.forEach(item => {
+        selectReg.innerHTML += `<option value="${item.region}">${item.region}</option>`;
+    });
+}
+
+// Cargar select de comunas dependiente de la región
+function cargarComunas() {
+    const regSeleccionada = document.getElementById('userRegion').value;
+    const selectCom = document.getElementById('userComuna');
+    selectCom.innerHTML = '<option value="">Seleccione Comuna...</option>';
+
+    const hallado = chileRegionesComunas.find(r => r.region === regSeleccionada);
+    if (hallado) {
+        hallado.comunas.forEach(c => {
+            selectCom.innerHTML += `<option value="${c}">${c}</option>`;
+        });
+    }
+}
+
+// Algoritmo para validar Dígito Verificador del RUN Chileno (Sin puntos ni guion)
+function validarRunChileno(runCompleto) {
+    let cleanRun = runCompleto.replace(/[^0-9kK]/g, '').toUpperCase();
+    if (cleanRun.length < 8 || cleanRun.length > 9) return false;
+
+    let cuerpo = cleanRun.slice(0, -1);
+    let dv = cleanRun.slice(-1);
+
+    let suma = 0;
+    let multiplo = 2;
+
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+        suma += parseInt(cuerpo.charAt(i)) * multiplo;
+        multiplo = multiplo < 7 ? multiplo + 1 : 2;
+    }
+
+    let dvEsperado = 11 - (suma % 11);
+    let dvCalc = dvEsperado === 11 ? '0' : dvEsperado === 10 ? 'K' : dvEsperado.toString();
+
+    return dv === dvCalc;
+}
+
+// Pintar Tabla Usuarios
+function renderizarTablaUsuariosAdmin() {
+    const tbody = document.getElementById('tablaAdminUsuarios');
+    if (!tbody) return;
+
+    tbody.innerHTML = listaUsuariosAdmin.map((u, index) => `
+        <tr>
+            <td class="fw-bold">${u.run}</td>
+            <td class="fw-semibold">${u.nombre} ${u.apellidos}</td>
+            <td>${u.correo}</td>
+            <td>
+                <span class="badge ${u.rol === 'Administrador' ? 'bg-danger' : 'bg-info text-dark'}">
+                    ${u.rol}
+                </span>
+            </td>
+            <td><small>${u.comuna}, ${u.region}</small></td>
+            <td class="text-end">
+                <button class="btn btn-outline-primary btn-sm me-1" onclick="editarUsuario(${index})">
+                    <i class="bi bi-pencil-square"></i>
+                </button>
+                <button class="btn btn-outline-danger btn-sm" onclick="eliminarUsuarioAdmin(${index})">
+                    <i class="bi bi-trash-fill"></i>
+                </button>
+            </td>
+        </tr>
+    `).join('');
+
+    document.getElementById('totalUsersCount').textContent = listaUsuariosAdmin.length;
+}
+
+// Abrir Modal Usuario
+function abrirModalUsuario() {
+    document.getElementById('formUsuario').reset();
+    document.getElementById('userIndexHidden').value = '-1';
+    document.getElementById('userRun').classList.remove('is-invalid');
+    document.getElementById('modalUsuarioTitulo').textContent = 'Crear Nuevo Usuario';
+    modalUsuarioInstance.show();
+}
+
+// Editar Usuario
+function editarUsuario(index) {
+    const u = listaUsuariosAdmin[index];
+    if (!u) return;
+
+    document.getElementById('userIndexHidden').value = index;
+    document.getElementById('userRun').value = u.run;
+    document.getElementById('userRol').value = u.rol;
+    document.getElementById('userNombre').value = u.nombre;
+    document.getElementById('userApellidos').value = u.apellidos;
+    document.getElementById('userCorreo').value = u.correo;
+    document.getElementById('userFechaNac').value = u.fechaNac || '';
+    
+    document.getElementById('userRegion').value = u.region;
+    cargarComunas();
+    document.getElementById('userComuna').value = u.comuna;
+    document.getElementById('userDireccion').value = u.direccion;
+
+    document.getElementById('userRun').classList.remove('is-invalid');
+    document.getElementById('modalUsuarioTitulo').textContent = 'Editar Usuario';
+    modalUsuarioInstance.show();
+}
+
+// Guardar Usuario con Validación de RUN
+function guardarUsuario(e) {
+    e.preventDefault();
+    const runInput = document.getElementById('userRun');
+    const runVal = runInput.value.trim();
+
+    // Validar RUN Chileno
+    if (!validarRunChileno(runVal)) {
+        runInput.classList.add('is-invalid');
+        return;
+    }
+    runInput.classList.remove('is-invalid');
+
+    const index = parseInt(document.getElementById('userIndexHidden').value);
+    const usuarioObj = {
+        run: runVal.toUpperCase(),
+        rol: document.getElementById('userRol').value,
+        nombre: document.getElementById('userNombre').value,
+        apellidos: document.getElementById('userApellidos').value,
+        correo: document.getElementById('userCorreo').value,
+        fechaNac: document.getElementById('userFechaNac').value,
+        region: document.getElementById('userRegion').value,
+        comuna: document.getElementById('userComuna').value,
+        direccion: document.getElementById('userDireccion').value
+    };
+
+    if (index === -1) {
+        listaUsuariosAdmin.push(usuarioObj);
+    } else {
+        listaUsuariosAdmin[index] = usuarioObj;
+    }
+
+    localStorage.setItem('misUsuariosAdmin', JSON.stringify(listaUsuariosAdmin));
+    renderizarTablaUsuariosAdmin();
+    modalUsuarioInstance.hide();
+    alert('¡Usuario guardado correctamente!');
+}
+
+// Eliminar Usuario
+function eliminarUsuarioAdmin(index) {
+    if (confirm('¿Deseas eliminar este usuario?')) {
+        listaUsuariosAdmin.splice(index, 1);
+        localStorage.setItem('misUsuariosAdmin', JSON.stringify(listaUsuariosAdmin));
+        renderizarTablaUsuariosAdmin();
+    }
+}
+    </script>
+    
+</body>
+</html>
